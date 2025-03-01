@@ -1,0 +1,154 @@
+<?php
+
+use App\Models\User;
+use Livewire\Volt\Component;
+use Livewire\WithPagination;
+use Livewire\Attributes\Url;
+
+new class extends Component {
+    use WithPagination;
+
+    #[Url]
+    public string $search = '';
+
+    public function with(): array
+    {
+        return [
+            'users' => User::query()
+                ->when(!empty($this->search), fn($query) => $query->whereAny([
+                    'name', 'email'
+                ], 'like', '%'.$this->search.'%'))
+                ->paginate(20)
+        ];
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function markUserAttendance(int $userId): void
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->attended_at) {
+            return;
+        }
+
+        $user->update([
+            'attended_at' => now(),
+        ]);
+
+        $this->modal('confirm-user-attendance-'.$userId)->close();
+    }
+
+    public function resetUserAttendance(int $userId): void
+    {
+        $user = User::findOrFail($userId);
+
+        if (!$user->attended_at) {
+            return;
+        }
+
+        $user->update([
+            'attended_at' => null,
+        ]);
+    }
+}; ?>
+<div class="my-10">
+    <flux:input wire:model.live.debounce="search" placeholder="Buscar por nombre o correo" clearable/>
+
+    <div class="px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="flow-root">
+            <div class="-mx-4 overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle">
+                    <div class="overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg">
+                        <table class="min-w-full border-separate border-spacing-0">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
+                                    Nombre
+                                </th>
+                                <th scope="col"
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
+                                    Correo
+                                </th>
+                                <th scope="col"
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
+                                    ¿Asistió?
+                                </th>
+                                <th scope="col"
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+                                    <span class="sr-only">Attendance</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                            @foreach($users as $user)
+                                <tr>
+                                    <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                        {{ $user->name }}
+                                    </td>
+                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                                        {{ $user->email }}
+                                    </td>
+                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                                        {{ $user->attended_at ? 'Sí' : 'No' }}
+                                    </td>
+                                    <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-sm font-medium sm:pr-8 lg:pr-8">
+                                        @if(!$user->attended_at)
+                                            <flux:modal.trigger
+                                                wire:key="confirm-user-attendance-modal-trigger-{{ $user->id }}"
+                                                name="confirm-user-attendance-{{ $user->id }}">
+                                                    <span class="cursor-pointer text-indigo-600 hover:text-indigo-900">
+                                                        Marcar asistencia
+                                                    </span>
+                                            </flux:modal.trigger>
+
+                                            <flux:modal wire:key="confirm-user-attendance-modal-{{ $user->id }}"
+                                                        wire:submit="markUserAttendance({{ $user->id }})"
+                                                        name="confirm-user-attendance-{{ $user->id }}" focusable
+                                                        class="w-72 sm:w-full sm:max-w-lg">
+                                                <form class="space-y-6">
+                                                    <div>
+                                                        <flux:heading size="lg">
+                                                            Confirmar asistencia
+                                                        </flux:heading>
+
+                                                        <flux:subheading class="text-wrap">
+                                                            ¿Desea marcar asistencia del usuario {{ $user->name }}?
+                                                        </flux:subheading>
+                                                    </div>
+
+                                                    <div class="flex justify-end space-x-2">
+                                                        <flux:modal.close>
+                                                            <flux:button variant="filled">Cancelar</flux:button>
+                                                        </flux:modal.close>
+
+                                                        <flux:button variant="primary" type="submit">Sí
+                                                        </flux:button>
+                                                    </div>
+                                                </form>
+                                            </flux:modal>
+                                        @else
+                                            <span wire:click="resetUserAttendance({{ $user->id }})"
+                                                  class="cursor-pointer text-gray-600 hover:text-gray-900">
+                                                Restablecer
+                                            </span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        {{ $users->links() }}
+    </div>
+</div>
