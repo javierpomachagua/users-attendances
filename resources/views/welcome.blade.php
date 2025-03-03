@@ -14,9 +14,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-<div class="bg-gray-100 py-24 min-h-screen">
+<div class="bg-gray-100 py-16 min-h-screen">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl sm:text-center">
+        <img src="{{ asset('logo-anglo.png') }}" alt="Logo" class="mx-auto w-72 rounded-xl"/>
+        <div class="mx-auto max-w-2xl sm:text-center mt-10">
             <h2 class="text-base/7 font-semibold text-indigo-600">Lista</h2>
             <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-balance sm:text-5xl">
                 Usuarios</p>

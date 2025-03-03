@@ -67,15 +67,15 @@ new class extends Component {
                             <thead>
                             <tr>
                                 <th scope="col"
-                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
                                     Nombre
                                 </th>
                                 <th scope="col"
-                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
                                     Correo
                                 </th>
                                 <th scope="col"
-                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
                                     ¿Asistió?
                                 </th>
                                 <th scope="col"
@@ -87,23 +87,23 @@ new class extends Component {
                             <tbody class="bg-white">
                             @foreach($users as $user)
                                 <tr>
-                                    <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                    <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6 lg:pl-8">
                                         {{ $user->name }}
                                     </td>
-                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
                                         {{ $user->email }}
                                     </td>
-                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
                                         {{ $user->attended_at ? 'Sí' : 'No' }}
                                     </td>
-                                    <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-sm font-medium sm:pr-8 lg:pr-8">
+                                    <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-base font-medium sm:pr-8 lg:pr-8">
                                         @if(!$user->attended_at)
                                             <flux:modal.trigger
                                                 wire:key="confirm-user-attendance-modal-trigger-{{ $user->id }}"
                                                 name="confirm-user-attendance-{{ $user->id }}">
-                                                    <span class="cursor-pointer text-indigo-600 hover:text-indigo-900">
-                                                        Marcar asistencia
-                                                    </span>
+                                                <flux:button variant="primary">
+                                                    Marcar asistencia
+                                                </flux:button>
                                             </flux:modal.trigger>
 
                                             <flux:modal wire:key="confirm-user-attendance-modal-{{ $user->id }}"
@@ -112,11 +112,11 @@ new class extends Component {
                                                         class="w-72 sm:w-full sm:max-w-lg">
                                                 <form class="space-y-6">
                                                     <div>
-                                                        <flux:heading size="lg">
+                                                        <flux:heading size="xl">
                                                             Confirmar asistencia
                                                         </flux:heading>
 
-                                                        <flux:subheading class="text-wrap">
+                                                        <flux:subheading class="text-wrap" size="lg">
                                                             ¿Desea marcar asistencia del usuario {{ $user->name }}?
                                                         </flux:subheading>
                                                     </div>
@@ -132,10 +132,39 @@ new class extends Component {
                                                 </form>
                                             </flux:modal>
                                         @else
-                                            <span wire:click="resetUserAttendance({{ $user->id }})"
-                                                  class="cursor-pointer text-gray-600 hover:text-gray-900">
-                                                Restablecer
-                                            </span>
+                                            <flux:modal.trigger
+                                                wire:key="confirm-user-reset-modal-trigger-{{ $user->id }}"
+                                                name="confirm-user-reset-{{ $user->id }}">
+                                                <flux:button>
+                                                    Restablecer
+                                                </flux:button>
+                                            </flux:modal.trigger>
+
+                                            <flux:modal wire:key="confirm-user-reset-modal-{{ $user->id }}"
+                                                        wire:submit="resetUserAttendance({{ $user->id }})"
+                                                        name="confirm-user-reset-{{ $user->id }}" focusable
+                                                        class="w-72 sm:w-full sm:max-w-lg">
+                                                <form class="space-y-6">
+                                                    <div>
+                                                        <flux:heading size="xl">
+                                                            Confirmar restablecer
+                                                        </flux:heading>
+
+                                                        <flux:subheading class="text-wrap" size="lg">
+                                                            ¿Desea restablecer al usuario {{ $user->name }}?
+                                                        </flux:subheading>
+                                                    </div>
+
+                                                    <div class="flex justify-end space-x-2">
+                                                        <flux:modal.close>
+                                                            <flux:button variant="filled">Cancelar</flux:button>
+                                                        </flux:modal.close>
+
+                                                        <flux:button variant="primary" type="submit">Sí
+                                                        </flux:button>
+                                                    </div>
+                                                </form>
+                                            </flux:modal>
                                         @endif
                                     </td>
                                 </tr>
