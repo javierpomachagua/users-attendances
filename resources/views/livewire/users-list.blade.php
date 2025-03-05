@@ -19,7 +19,9 @@ new class extends Component {
                     'name', 'dni'
                 ], 'like', '%'.$this->search.'%'))
                 ->where('is_employee', false)
-                ->paginate(20)
+                ->paginate(20),
+            'countAttendedAssistantUsers' => User::whereNotNull('attended_at')->where('is_employee', false)->count(),
+            'countAttendedEmployeeUsers' => User::whereNotNull('attended_at')->where('is_employee', true)->count(),
         ];
     }
 
@@ -201,5 +203,10 @@ new class extends Component {
                 Encuesta
             </flux:button>
         </a>
+    </div>
+
+    <div class="mt-4">
+        <p>Usuarios asistentes atendidos: {{ $countAttendedAssistantUsers }}</p>
+        <p class="mt-2">Usuarios empleados atendidos: {{ $countAttendedEmployeeUsers }}</p>
     </div>
 </div>
