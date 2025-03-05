@@ -20,6 +20,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamp('attended_at')->nullable();
             $table->string('dni');
+            $table->integer('invitations')->nullable();
+            $table->boolean('is_employee')->default(false);
             $table->timestamps();
         });
 

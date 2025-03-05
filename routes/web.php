@@ -1,13 +1,35 @@
 <?php
 
+use App\Imports\AssistantUsersImport;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
 Route::view('/survey', 'survey')->name('survey');
+
+Route::view('/users/create', 'users-create')->name('users.create');
+
+Route::get('/users/import', function () {
+
+    return view('users-import');
+})->name('users.import');
+
+Route::post('/users/import', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx',
+    ]);
+
+    $file = $request->file('file');
+
+    Excel::import(new AssistantUsersImport, $file);
+
+    return redirect()->route('users.import');
+
+})->name('users.import');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

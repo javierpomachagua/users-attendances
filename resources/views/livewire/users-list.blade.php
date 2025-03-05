@@ -16,7 +16,7 @@ new class extends Component {
         return [
             'users' => User::query()
                 ->when(!empty($this->search), fn($query) => $query->whereAny([
-                    'name', 'email'
+                    'name', 'dni'
                 ], 'like', '%'.$this->search.'%'))
                 ->paginate(20)
         ];
@@ -56,7 +56,7 @@ new class extends Component {
     }
 }; ?>
 <div class="my-10">
-    <flux:input wire:model.live.debounce="search" placeholder="Buscar por nombre o correo" clearable/>
+    <flux:input wire:model.live.debounce="search" placeholder="Buscar por nombre o DNI" clearable/>
 
     <div class="px-4 sm:px-6 lg:px-8 mt-6">
         <div class="flow-root">
@@ -72,7 +72,7 @@ new class extends Component {
                                 </th>
                                 <th scope="col"
                                     class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
-                                    Correo
+                                    DNI
                                 </th>
                                 <th scope="col"
                                     class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
@@ -91,7 +91,7 @@ new class extends Component {
                                         {{ $user->name }}
                                     </td>
                                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
-                                        {{ $user->email }}
+                                        {{ $user->dni }}
                                     </td>
                                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
                                         {{ $user->attended_at ? 'Sí' : 'No' }}
@@ -181,7 +181,13 @@ new class extends Component {
         {{ $users->links() }}
     </div>
 
-    <div class="flex">
+    <div class="flex space-x-4">
+        <a wire:navigate href="{{ route('users.create') }}">
+            <flux:button variant="primary" class="w-full mt-4">
+                Nuevo asistente
+            </flux:button>
+        </a>
+
         <a wire:navigate href="{{ route('survey') }}">
             <flux:button variant="filled" class="w-full mt-4">
                 Encuesta
