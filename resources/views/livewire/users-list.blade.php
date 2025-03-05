@@ -206,7 +206,7 @@ new class extends Component {
     </div>
 
     <div class="mt-4">
-        <p>Usuarios asistentes atendidos: {{ $countAttendedAssistantUsers }}</p>
+        <p>Usuarios invitados atendidos: {{ $countAttendedAssistantUsers }}</p>
         <p class="mt-2">Usuarios empleados atendidos: {{ $countAttendedEmployeeUsers }}</p>
     </div>
 </div>
