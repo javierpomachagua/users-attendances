@@ -192,12 +192,12 @@ new class extends Component {
     <div class="flex space-x-4">
         <a wire:navigate href="{{ route('users.create') }}">
             <flux:button variant="primary" class="w-full mt-4">
-                Nuevo asistente
+                Buscar empleado
             </flux:button>
         </a>
 
         <a wire:navigate href="{{ route('survey') }}">
-            <flux:button variant="filled" class="w-full mt-4">
+            <flux:button class="w-full mt-4">
                 Encuesta
             </flux:button>
         </a>

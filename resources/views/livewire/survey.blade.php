@@ -75,7 +75,7 @@ new class extends Component {
         @if(!$user)
             <form wire:submit="submitDni">
                 <flux:input wire:model="dni"
-                            label="'DNI"
+                            label="DNI"
                             type="number"
                             name="dni"
                             size="base"
@@ -86,7 +86,7 @@ new class extends Component {
                 </flux:button>
 
                 <a wire:navigate href="{{ route('home') }}">
-                    <flux:button variant="ghost" class="w-full mt-4">
+                    <flux:button class="w-full mt-4">
                         Ir a la lista
                     </flux:button>
                 </a>
