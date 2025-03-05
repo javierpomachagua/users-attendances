@@ -20,8 +20,16 @@ new class extends Component {
                 ], 'like', '%'.$this->search.'%'))
                 ->where('is_employee', false)
                 ->paginate(20),
-            'countAttendedAssistantUsers' => User::whereNotNull('attended_at')->where('is_employee', false)->count(),
-            'countAttendedEmployeeUsers' => User::whereNotNull('attended_at')->where('is_employee', true)->count(),
+            'countAttendedAssistantUsers' => User::query()
+                ->selectSub('SUM(1 + COALESCE(invitations, 0))', 'total_users')
+                ->whereNotNull('attended_at')
+                ->where('is_employee', false)
+                ->first()->total_users,
+            'countAttendedEmployeeUsers' => User::query()
+                ->selectSub('SUM(1 + COALESCE(invitations, 0))', 'total_users')
+                ->whereNotNull('attended_at')
+                ->where('is_employee', true)
+                ->first()->total_users,
         ];
     }
 
