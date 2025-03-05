@@ -1,5 +1,12 @@
 <x-layouts.guest>
     <div class="flex-1 flex flex-col space-y-10 justify-center items-center">
+        @foreach($errors as $error)
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">¡Ups!</strong>
+                <span class="block sm:inline">{{ $error }}</span>
+            </div>
+        @endforeach
+
         <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data" class="w-full max-w-sm">
             @csrf
 

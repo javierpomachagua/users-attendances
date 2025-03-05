@@ -18,6 +18,7 @@ new class extends Component {
                 ->when(!empty($this->search), fn($query) => $query->whereAny([
                     'name', 'dni'
                 ], 'like', '%'.$this->search.'%'))
+                ->where('is_employee', false)
                 ->paginate(20)
         ];
     }

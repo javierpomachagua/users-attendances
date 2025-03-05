@@ -15,9 +15,8 @@ Route::view('/survey', 'survey')->name('survey');
 Route::view('/users/create', 'users-create')->name('users.create');
 
 Route::get('/users/import', function () {
-
     return view('users-import');
-})->name('users.import');
+});
 
 Route::post('/users/import', function (\Illuminate\Http\Request $request) {
     $request->validate([
@@ -28,7 +27,7 @@ Route::post('/users/import', function (\Illuminate\Http\Request $request) {
 
     Excel::import(new AssistantUsersImport, $file);
 
-    return redirect()->route('users.import');
+    return redirect()->back();
 
 })->name('users.import');
 
@@ -41,7 +40,7 @@ Route::post('/users-employees/import', function (\Illuminate\Http\Request $reque
 
     Excel::import(new EmployeeUsersImport, $file);
 
-    return redirect()->route('users.import');
+    return redirect()->back();
 
 })->name('users-employees.import');
 

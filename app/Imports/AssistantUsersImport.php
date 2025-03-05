@@ -21,6 +21,7 @@ class AssistantUsersImport implements ToModel, WithHeadingRow
         if ($user = User::where('dni', $row['dni'])->first()) {
             $user->update([
                 'invitations' => $row['invitations'],
+                'is_employee' => false,
             ]);
 
             return $user;
