@@ -180,4 +180,12 @@ new class extends Component {
     <div class="mt-6">
         {{ $users->links() }}
     </div>
+
+    <div class="flex">
+        <a wire:navigate href="{{ route('survey') }}">
+            <flux:button variant="filled" class="w-full mt-4">
+                Encuesta
+            </flux:button>
+        </a>
+    </div>
 </div>

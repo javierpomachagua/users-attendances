@@ -12,6 +12,30 @@
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        [data-flux-label] {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            padding-bottom: 0.5rem;
+        }
+
+        [data-flux-button] {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+            height: 4rem;
+        }
+
+        [data-flux-control] {
+            font-size: 1.5rem;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+            height: 4rem;
+            line-height: 2.25rem;
+        }
+    </style>
 </head>
 <body>
 <div class="bg-gray-100 min-h-screen flex flex-col py-16">

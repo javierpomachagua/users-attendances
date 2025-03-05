@@ -43,7 +43,7 @@ new class extends Component {
     public function submitScore3(): void
     {
         $this->validate([
-            'score_3' => 'required|in:si,no'
+            'score_3' => 'required|between:1,10'
         ]);
 
         $this->user->surveys()->delete();
@@ -64,30 +64,6 @@ new class extends Component {
 }; ?>
 
 <div>
-    <style>
-        [data-flux-label] {
-            font-size: 1.125rem;
-            line-height: 1.75rem;
-            padding-bottom: 0.5rem;
-        }
-
-        [data-flux-button] {
-            font-size: 1.125rem;
-            line-height: 1.75rem;
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-            height: 4rem;
-        }
-
-        [data-flux-control] {
-            font-size: 1.5rem;
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-            height: 4rem;
-            line-height: 2.25rem;
-        }
-    </style>
-
     @if($surveyCompleted)
         <h1 class="text-3xl">¡Gracias <span class="font-bold">{{ $user->name }}</span> por participar!</h1>
         <h2 class="text-3xl mt-4">Tu opinión es muy importante para nosotros.</h2>
@@ -108,6 +84,12 @@ new class extends Component {
                 <flux:button type="submit" variant="primary" class="w-full mt-4">
                     Ingresar
                 </flux:button>
+
+                <a wire:navigate href="{{ route('home') }}">
+                    <flux:button variant="ghost" class="w-full mt-4">
+                        Ir a la lista
+                    </flux:button>
+                </a>
             </form>
         @else
             <h1 class="text-3xl">Hola, <span class="font-bold">{{ $user->name }}</span></h1>
@@ -196,7 +178,7 @@ new class extends Component {
                         </div>
 
                         <div class="my-10 grid grid-cols-3 gap-3 sm:grid-cols-6">
-                            @foreach(["si", "no"] as $number)
+                            @foreach(range(1, 10) as $number)
                                 <div class="inline-block">
                                     <input
                                         type="radio"
