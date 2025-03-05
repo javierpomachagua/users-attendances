@@ -40,7 +40,7 @@ new class extends Component {
         }
 
         $this->validate([
-            'invitations' => 'required|min:0',
+            'invitations' => 'nullable',
         ]);
 
         $user->update([
