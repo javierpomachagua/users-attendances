@@ -98,7 +98,7 @@ new class extends Component {
                 <form wire:submit="submitScore1" class="mt-20">
                     <fieldset aria-label="Choose a memory option">
                         <div class="flex items-center justify-between">
-                            <div class="text-2xl font-medium text-gray-900">
+                            <div class="text-2xl font-medium ">
                                 ¿Cómo calificas la experiencia en el evento hoy?
                             </div>
                         </div>
@@ -135,7 +135,7 @@ new class extends Component {
                 <form wire:submit="submitScore2" class="mt-20">
                     <fieldset aria-label="Choose a memory option">
                         <div class="flex items-center justify-between">
-                            <div class="text-2xl font-medium text-gray-900">
+                            <div class="text-2xl font-medium ">
                                 ¿Consideras que el evento cumplió con tus expectativas?
                             </div>
                         </div>
@@ -172,7 +172,7 @@ new class extends Component {
                 <form wire:submit="submitScore3" class="mt-20">
                     <fieldset aria-label="Choose a memory option">
                         <div class="flex items-center justify-between">
-                            <div class="text-2xl font-medium text-gray-900">
+                            <div class="text-2xl font-medium ">
                                 ¿Participarías y recomendarías a otros eventos de anglo american?
                             </div>
                         </div>

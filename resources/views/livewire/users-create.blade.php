@@ -39,6 +39,10 @@ new class extends Component {
             return;
         }
 
+        $this->validate([
+            'invitations' => 'required|min:1',
+        ]);
+
         $user->update([
             'attended_at' => now(),
             'invitations' => $this->invitations,
