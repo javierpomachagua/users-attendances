@@ -1,5 +1,5 @@
 <x-layouts.guest>
-    <div class="flex-1 flex justify-center items-center">
+    <div class="px-10">
         <livewire:users-create/>
     </div>
 </x-layouts.guest>
