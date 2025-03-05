@@ -15,7 +15,10 @@ new class extends Component {
 
     public function updatedDni(): void
     {
-        $this->user = User::where('dni', $this->dni)->first();
+        $this->user = User::query()
+            ->where('dni', $this->dni)
+            ->where('is_employee', true)
+            ->first();
 
         if (!$this->user) {
             $this->reset(['user']);

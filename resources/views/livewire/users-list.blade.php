@@ -76,6 +76,10 @@ new class extends Component {
                                 </th>
                                 <th scope="col"
                                     class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
+                                    # de Invitados
+                                </th>
+                                <th scope="col"
+                                    class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-base font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
                                     ¿Asistió?
                                 </th>
                                 <th scope="col"
@@ -92,6 +96,9 @@ new class extends Component {
                                     </td>
                                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
                                         {{ $user->dni }}
+                                    </td>
+                                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
+                                        {{ $user->invitations }}
                                     </td>
                                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-base text-gray-500 sm:table-cell">
                                         {{ $user->attended_at ? 'Sí' : 'No' }}

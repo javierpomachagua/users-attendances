@@ -1,6 +1,7 @@
 <?php
 
 use App\Imports\AssistantUsersImport;
+use App\Imports\EmployeeUsersImport;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,6 +31,19 @@ Route::post('/users/import', function (\Illuminate\Http\Request $request) {
     return redirect()->route('users.import');
 
 })->name('users.import');
+
+Route::post('/users-employees/import', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx',
+    ]);
+
+    $file = $request->file('file');
+
+    Excel::import(new EmployeeUsersImport, $file);
+
+    return redirect()->route('users.import');
+
+})->name('users-employees.import');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
