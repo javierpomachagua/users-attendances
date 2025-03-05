@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::view('/survey', 'survey')->name('survey');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

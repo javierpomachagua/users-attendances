@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('attended_at')->nullable();
+            $table->string('dni');
             $table->timestamps();
         });
 

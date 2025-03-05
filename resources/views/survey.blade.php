@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Evento</title>
+    <title>Encuesta</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,15 +14,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-<div class="bg-gray-100 py-16 min-h-screen">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="bg-gray-100 min-h-screen flex flex-col py-16">
+    <div class="lg:px-8 mx-auto px-6">
         <img src="{{ asset('logo-anglo.png') }}" alt="Logo" class="mx-auto h-20 rounded-xl"/>
         <div class="mx-auto max-w-2xl sm:text-center mt-10">
-            <h1 class="text-base/7 font-semibold text-indigo-600">Lista</h1>
+            <h1 class="text-base/7 font-semibold text-indigo-600">Encuesta</h1>
             <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-balance sm:text-5xl">
                 Evento por el Día de la Mujer</p>
         </div>
-        <livewire:users-list/>
+    </div>
+    <div class="flex-1 flex justify-center items-center">
+        <livewire:survey/>
     </div>
 </div>
 @fluxScripts
