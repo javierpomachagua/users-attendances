@@ -12,7 +12,7 @@ new class extends Component {
     #[Url]
     public string $search = '';
 
-    public string $invitations = '';
+    public ?string $invitations = null;
 
     public function with(): array
     {
