@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->configureCommands();
+        //        $this->configureCommands();
 
         $this->configureModels();
 
@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureCommands(): void
     {
+
         DB::prohibitDestructiveCommands(
             $this->app->isProduction()
         );
